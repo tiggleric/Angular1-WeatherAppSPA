@@ -43,14 +43,18 @@ weatherApp.controller('homeController', ['$scope', 'locationService', function($
     });
 }]);
 
-weatherApp.controller('forecastController', ['$scope', '$resource', '$sce','locationService', function($scope, $resource, $sce, locationService){
+weatherApp.controller('forecastController', ['$scope', '$resource', '$sce', 'locationService', function($scope, $resource, $sce, locationService){
     
     $scope.searchKey = locationService.zipcode + "," + locationService.countryCode;
-    //?APPID=a4f92f0fd3e783c547e1af5127564493
    
     $scope.weatherAPI = $resource("http://api.openweathermap.org/data/2.5/forecast/daily?APPID=a4f92f0fd3e783c547e1af5127564493", {get : { method: "JSONP" }});
     $scope.weatherResult = $scope.weatherAPI.get({ zip: $scope.searchKey });
     
-    console.log("Search key: "+$scope.searchKey);
-    console.log($scope.weatherResult);
+    $scope.convertToFahrenheit = function(kelvin){
+        return Math.round((1.8 * (kelvin -273)) +32 );
+    }
+    
+    $scope.convertToDate = function(sec){
+        return new Date(sec * 1000);
+    }
 }]);
