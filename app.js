@@ -58,3 +58,18 @@ weatherApp.controller('forecastController', ['$scope', '$resource', '$sce', 'loc
         return new Date(sec * 1000);
     }
 }]);
+
+//Directives
+weatherApp.directive("weatherReport", function(){
+    return {
+        restrict: 'E',
+        templateUrl: 'directives/weatherReport.html',
+        replace: true,
+        scope: {
+            weatherDay: "=",
+            convertToDegrees: "&",
+            convertToDate: "&",
+            dateFormat: "@"
+        }
+    }
+});
