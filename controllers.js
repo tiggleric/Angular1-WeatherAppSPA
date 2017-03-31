@@ -1,12 +1,15 @@
 //Controllers
-weatherApp.controller('homeController', ['$scope', 'locationService', function($scope, locationService){
+weatherApp.controller('homeController', ['$scope', '$location', 'locationService', function($scope, $location, locationService){
     
     $scope.zipcode = locationService.zipcode;
     $scope.searchKey = locationService.zipcode + "," + locationService.countryCode;
     $scope.$watch('zipcode', function(){
         locationService.zipcode = $scope.zipcode;
-        $scope.searchKey =  $scope.zipcode + "," +             locationService.countryCode;
+        $scope.searchKey =  $scope.zipcode + "," + locationService.countryCode;
     });
+    $scope.submitZipcode = function(){
+        $location.path('/forecast');
+    };
 }]);
 
 weatherApp.controller('forecastController', ['$scope', '$resource', '$sce', 'locationService', function($scope, $resource, $sce, locationService){
